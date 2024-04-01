@@ -1,11 +1,13 @@
 from torch import nn
 import torchsummary
 import torch
+
+
 class AlexNet(nn.Module):
     def __init__(self, num_classes=2):
         super(AlexNet, self).__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=11, stride=4, padding=2),
+            nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Conv2d(64, 192, kernel_size=5, padding=2),
@@ -22,7 +24,7 @@ class AlexNet(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Dropout(),
-            nn.Linear(256 * 5 * 5, 4096),  # Assumes the fixed input size
+            nn.Linear(256 * 6 * 6, 4096),  # Assumes the fixed input size
             nn.Dropout(),
             nn.Linear(4096, 4096),
             nn.ReLU(inplace=True),
@@ -31,11 +33,12 @@ class AlexNet(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
+        # print(x.shape)
         x = x.flatten(1) # Flatten the output for the fully connected layers
         x = self.classifier(x)
         return x
     
 
 # alex_net = AlexNet()
-# alex_net(torch.randn(2, 1, 200, 200))
+# alex_net(torch.randn(2, 3, 224, 224))
 # torchsummary.summary(alex_net, (3, 224, 224))

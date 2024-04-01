@@ -7,7 +7,7 @@ class VGG16(nn.Module):
         super(VGG16, self).__init__()
         self.features = nn.Sequential(
             # Conv Block 1
-            nn.Conv2d(1, 64, kernel_size=3, padding=1),
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(64, 64, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
@@ -61,5 +61,5 @@ class VGG16(nn.Module):
 
 
 # model = VGG16()
-# model(torch.randn(1,1,200,200))
+# model(torch.randn(1,3,200,200))
 # torchsummary.summary(model, (2, 200, 200))
