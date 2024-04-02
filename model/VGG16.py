@@ -44,7 +44,7 @@ class VGG16(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(512 * 6 * 6, 4096),
+            nn.Linear(512 * 7 * 7, 4096),
             nn.ReLU(inplace=True),
             nn.Dropout(),
             nn.Linear(4096, 4096),
@@ -55,11 +55,13 @@ class VGG16(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
+        # print(x.shape)
         x = x.flatten(1)
+        # print(x.shape)
         x = self.classifier(x)
         return x
 
-
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # model = VGG16()
-# model(torch.randn(1,3,200,200))
-# torchsummary.summary(model, (2, 200, 200))
+# # model(torch.randn(1,3,224,224))
+# torchsummary.summary(model, (3, 224, 224), device='cpu')

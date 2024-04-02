@@ -1,7 +1,9 @@
+# Built using code from https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py
+
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-import torchsummary
+
 class BasicBlock(nn.Module):
     expansion = 1
 
